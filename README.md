@@ -28,7 +28,7 @@ vad path = temp.writeFileSync(data);
 
 The api mimics the one provided by `fs` very closely.
 
-### `.open(path, flags[, mode], callback)`
+### `.open(flags[, mode], callback)`
 
 Asynchronous file open.
 
@@ -36,7 +36,7 @@ Asynchronous file open.
 
 The callback gets two arguments `(err, obj)`. `obj` has `fd` and `path`.
 
-### `.openSync(path, flags[, mode])`
+### `.openSync(flags[, mode])`
 
 Synchronous version of `.open()`, returns `obj` with `fd` and `path`.
 
