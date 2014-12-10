@@ -24,6 +24,14 @@ vad path = temp.writeFileSync(data);
 // `path` now holds the path to a file with the specified `data`
 ```
 
+```js
+var temp = require('fs-temp');
+
+var path = temp.template('linusu-%s').mkdirSync();
+
+// `path` now holds the path to a directory with the prefix "linusu-"
+```
+
 ## API
 
 The api mimics the one provided by `fs` very closely.
@@ -60,6 +68,12 @@ The callback gets two arguments `(err, path)`.
 ### `.writeFileSync(data[, encoding])`
 
 Synchronous version of `.writeFileSync()`, returns `path`.
+
+### `.template(template)`
+
+Returns a copy of the module that uses the specified `template` when generating
+file names. `template` should be a string where `%s` will be replaced with some
+random characters (e.g. `"linusu-%s"`).
 
 ## License
 
