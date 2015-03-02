@@ -60,4 +60,19 @@ describe('template', function () {
 
   });
 
+  it('should write a stream', function (done) {
+
+    var content = new Buffer('hello world');
+    var out = libWithTemplate.createWriteStream();
+
+    out.on('finish', function () {
+      cleanup.push(fs.unlinkSync.bind(fs, out.path));
+      assertPathMatches(out.path);
+      done();
+    });
+
+    out.end(content);
+
+  });
+
 });

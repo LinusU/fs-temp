@@ -17,7 +17,8 @@ function template(template) {
     mkdir: temp.mkdir.bind(temp, template),
     mkdirSync: temp.mkdirSync.bind(temp, template),
     writeFile: temp.writeFile.bind(temp, template),
-    writeFileSync: temp.writeFileSync.bind(temp, template)
+    writeFileSync: temp.writeFileSync.bind(temp, template),
+    createWriteStream: temp.createWriteStream.bind(temp, template)
   };
 }
 
