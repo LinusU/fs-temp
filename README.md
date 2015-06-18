@@ -19,7 +19,7 @@ npm install --save fs-temp
 var temp = requrie('fs-temp');
 
 var data = new Buffer('testing 1 2 3');
-vad path = temp.writeFileSync(data);
+var path = temp.writeFileSync(data);
 
 // `path` now holds the path to a file with the specified `data`
 ```
