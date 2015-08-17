@@ -1,6 +1,6 @@
 {
   "name": "fs-temp",
-  "version": "0.1.3",
+  "version": "0.2.0",
   "license": "MIT",
   "author": "Linus Unnebäck <linus@folkdatorn.se>",
   "main": "index.js",
