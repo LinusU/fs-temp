@@ -16,20 +16,20 @@ npm install --save fs-temp
 ## Usage
 
 ```js
-var temp = requrie('fs-temp');
+var temp = requrie('fs-temp')
 
-var data = new Buffer('testing 1 2 3');
-var path = temp.writeFileSync(data);
+var data = new Buffer('testing 1 2 3')
+var path = temp.writeFileSync(data)
 
 // `path` now holds the path to a file with the specified `data`
 ```
 
 ```js
-var temp = require('fs-temp');
+var temp = require('fs-temp')
 
-var path = temp.template('linusu-%s').mkdirSync();
+var path = temp.template('linusu-%s').mkdirSync()
 
-// `path` now holds the path to a directory with the prefix "linusu-"
+// `path` now holds the path to a directory with the prefix 'linusu-'
 ```
 
 ## API
@@ -83,7 +83,7 @@ ways.
 
 Returns a copy of the module that uses the specified `template` when generating
 file names. `template` should be a string where `%s` will be replaced with some
-random characters (e.g. `"linusu-%s"`).
+random characters (e.g. `'linusu-%s'`).
 
 The string should contain `%s` exactly once. If you want to include a literal
 percent sign, escape it with another one, e.g. `'%%string'` becomes `'%string'`.
