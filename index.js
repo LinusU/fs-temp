@@ -1,14 +1,12 @@
+var temp = require('./lib/temp')
 
-var temp = require('./lib/temp');
-
-function template(template) {
-
+function template (template) {
   if (typeof template !== 'string') {
-    throw new TypeError('template is not a string');
+    throw new TypeError('template is not a string')
   }
 
   if (template.indexOf('%s') === -1) {
-    throw new Error('template must contain replacement token %s');
+    throw new Error('template must contain replacement token %s')
   }
 
   return {
@@ -19,8 +17,8 @@ function template(template) {
     writeFile: temp.writeFile.bind(temp, template),
     writeFileSync: temp.writeFileSync.bind(temp, template),
     createWriteStream: temp.createWriteStream.bind(temp, template)
-  };
+  }
 }
 
-module.exports = template('%s');
-module.exports.template = template;
+module.exports = template('%s')
+module.exports.template = template

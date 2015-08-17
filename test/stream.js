@@ -1,70 +1,61 @@
+/* eslint-env mocha */
 
-var lib = require('../');
+var lib = require('../')
 
-var fs = require('fs');
-var assert = require('assert');
+var fs = require('fs')
+var assert = require('assert')
 
-var data = new Buffer('testing 1 2 3');
+var data = new Buffer('testing 1 2 3')
 
 function checkWrittenFile (path) {
-
-  var content = fs.readFileSync(path);
-  assert.equal(content.toString(), data.toString());
-
+  var content = fs.readFileSync(path)
+  assert.equal(content.toString(), data.toString())
 }
 
 describe('createWriteStream', function () {
-
-  var cleanup = [];
+  var cleanup = []
 
   after(function () {
-
     cleanup.forEach(function (path) {
-      try { fs.unlinkSync(path); } catch (err) {}
-    });
+      try { fs.unlinkSync(path) } catch (err) {}
+    })
 
-    cleanup = [];
-
-  });
+    cleanup = []
+  })
 
   it('should write a stream', function (done) {
-
-    var s = lib.createWriteStream();
-    var pathEmitted = false;
+    var s = lib.createWriteStream()
+    var pathEmitted = false
 
     s.on('path', function (path) {
-      cleanup.push(path);
-      pathEmitted = true;
-    });
+      cleanup.push(path)
+      pathEmitted = true
+    })
 
     s.on('finish', function () {
-      assert.ok(pathEmitted);
-      checkWrittenFile(s.path);
-      done();
-    });
+      assert.ok(pathEmitted)
+      checkWrittenFile(s.path)
+      done()
+    })
 
-    s.end(data);
-
-  });
+    s.end(data)
+  })
 
   it('should accept string and encoding', function (done) {
-
-    var s = lib.createWriteStream({ encoding: 'utf-8' });
-    var pathEmitted = false;
+    var s = lib.createWriteStream({ encoding: 'utf-8' })
+    var pathEmitted = false
 
     s.on('path', function (path) {
-      cleanup.push(path);
-      pathEmitted = true;
-    });
+      cleanup.push(path)
+      pathEmitted = true
+    })
 
     s.on('finish', function () {
-      assert.ok(pathEmitted);
-      checkWrittenFile(s.path);
-      done();
-    });
+      assert.ok(pathEmitted)
+      checkWrittenFile(s.path)
+      done()
+    })
 
-    s.end(data.toString());
-
-  });
-
-});
+    s.end(data.toString())
+  })
+})

@@ -1,50 +1,41 @@
+/* eslint-env mocha */
 
-var lib = require('../');
+var lib = require('../')
 
-var fs = require('fs');
-var assert = require('assert');
+var fs = require('fs')
+var assert = require('assert')
 
 function checkCreatedDir (path) {
-
-  var files = fs.readdirSync(path);
-  assert.equal(files.length, 0);
-
+  var files = fs.readdirSync(path)
+  assert.equal(files.length, 0)
 }
 
 describe('mkdir', function () {
-
-  var cleanup = [];
+  var cleanup = []
 
   after(function () {
-
     cleanup.forEach(function (path) {
-      try { fs.rmdirSync(path); } catch (err) {}
-    });
+      try { fs.rmdirSync(path) } catch (err) {}
+    })
 
-    cleanup = [];
-
-  });
+    cleanup = []
+  })
 
   it('should create empty directory async', function (done) {
-
     lib.mkdir(function (err, path) {
-      assert.ifError(err);
+      assert.ifError(err)
 
-      cleanup.push(path);
-      checkCreatedDir(path);
+      cleanup.push(path)
+      checkCreatedDir(path)
 
-      done();
-    });
-
-  });
+      done()
+    })
+  })
 
   it('should create empty directory sync', function () {
+    var path = lib.mkdirSync()
 
-    var path = lib.mkdirSync();
-
-    cleanup.push(path);
-    checkCreatedDir(path);
-
-  });
-
-});
+    cleanup.push(path)
+    checkCreatedDir(path)
+  })
+})
