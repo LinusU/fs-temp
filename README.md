@@ -85,6 +85,9 @@ Returns a copy of the module that uses the specified `template` when generating
 file names. `template` should be a string where `%s` will be replaced with some
 random characters (e.g. `"linusu-%s"`).
 
+The string should contain `%s` exactly once. If you want to include a literal
+percent sign, escape it with another one, e.g. `'%%string'` becomes `'%string'`.
+
 ## License
 
 The MIT License (MIT)
