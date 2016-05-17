@@ -32,6 +32,21 @@ var path = temp.template('linusu-%s').mkdirSync()
 // `path` now holds the path to a directory with the prefix 'linusu-'
 ```
 
+## Promise support
+
+If you require `fs-temp/promise` you'll receive an alternative API where all
+functions that takes callbacks are replaced by `Promise`-returning functions.
+
+```js
+var temp = require('fs-temp/promise')
+
+var data = new Buffer('testing 1 2 3')
+
+temp.writeFile(data).then(path => {
+  // `path` now holds the path to a file with the specified `data`
+})
+```
+
 ## API
 
 The api mimics the one provided by `fs` very closely.
