@@ -1,25 +1,8 @@
 var temp = require('./lib/temp')
-
-function validTemplate (template) {
-  var re = /(^|[^%])(%%)*%s/
-  var first = re.exec(template)
-  if (first === null) return false
-
-  var pos = first.index + first[0].length
-  var second = re.exec(template.substring(pos))
-  if (second !== null) return false
-
-  return true
-}
+var validateTemplate = require('./lib/validate-template')
 
 function template (template) {
-  if (typeof template !== 'string') {
-    throw new TypeError('template is not a string')
-  }
-
-  if (validTemplate(template) !== true) {
-    throw new Error('template must contain replacement token %s exactly once')
-  }
+  validateTemplate(template)
 
   return {
     open: temp.open.bind(temp, template),
