@@ -1,6 +1,6 @@
 {
   "name": "fs-temp",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "license": "MIT",
   "author": "Linus Unnebäck <linus@folkdatorn.se>",
   "main": "index.js",
@@ -19,5 +19,8 @@
   "repository": {
     "type": "git",
     "url": "http://github.com/LinusU/fs-temp.git"
+  },
+  "dependencies": {
+    "random-path": "^0.1.0"
   }
 }

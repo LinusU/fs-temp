@@ -1,8 +1,8 @@
 var temp = require('./lib/temp')
-var validateTemplate = require('./lib/validate-template')
+var randomPath = require('random-path')
 
 function template (template) {
-  validateTemplate(template)
+  randomPath.validateTemplate(template)
 
   return {
     open: temp.open.bind(temp, template),

@@ -1,5 +1,5 @@
 var temp = require('./lib/temp')
-var validateTemplate = require('./lib/validate-template')
+var randomPath = require('random-path')
 
 function promisify (fn) {
   return function () {
@@ -22,7 +22,7 @@ function promisify (fn) {
 }
 
 function template (template) {
-  validateTemplate(template)
+  randomPath.validateTemplate(template)
 
   return {
     open: promisify(temp.open.bind(temp, template)),
