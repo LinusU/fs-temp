@@ -19,5 +19,8 @@
   "repository": {
     "type": "git",
     "url": "http://github.com/LinusU/fs-temp.git"
+  },
+  "dependencies": {
+    "random-path": "^0.1.0"
   }
 }
