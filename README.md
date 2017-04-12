@@ -16,7 +16,7 @@ npm install --save fs-temp
 ## Usage
 
 ```js
-var temp = requrie('fs-temp')
+var temp = require('fs-temp')
 
 var data = new Buffer('testing 1 2 3')
 var path = temp.writeFileSync(data)
