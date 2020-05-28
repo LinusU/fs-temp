@@ -5,7 +5,9 @@
   "author": "Linus Unnebäck <linus@folkdatorn.se>",
   "main": "index.js",
   "files": [
+    "index.d.ts",
     "index.js",
+    "promise.d.ts",
     "promise.js",
     "lib/"
   ],
