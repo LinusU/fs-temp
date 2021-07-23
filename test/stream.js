@@ -25,15 +25,9 @@ describe('createWriteStream', function () {
 
   it('should write a stream', function (done) {
     var s = lib.createWriteStream()
-    var pathEmitted = false
-
-    s.on('path', function (path) {
-      cleanup.push(path)
-      pathEmitted = true
-    })
+    cleanup.push(s.path)
 
     s.on('finish', function () {
-      assert.ok(pathEmitted)
       checkWrittenFile(s.path)
       done()
     })
@@ -41,17 +35,23 @@ describe('createWriteStream', function () {
     s.end(data)
   })
 
-  it('should accept string and encoding', function (done) {
-    var s = lib.createWriteStream({ encoding: 'utf-8' })
-    var pathEmitted = false
-
-    s.on('path', function (path) {
-      cleanup.push(path)
-      pathEmitted = true
-    })
+  it('should accept string and encoding #1', function (done) {
+    var s = lib.createWriteStream('utf-8')
+    cleanup.push(s.path)
 
     s.on('finish', function () {
-      assert.ok(pathEmitted)
+      checkWrittenFile(s.path)
+      done()
+    })
+
+    s.end(data.toString())
+  })
+
+  it('should accept string and encoding #2', function (done) {
+    var s = lib.createWriteStream({ encoding: 'utf-8' })
+    cleanup.push(s.path)
+
+    s.on('finish', function () {
       checkWrittenFile(s.path)
       done()
     })

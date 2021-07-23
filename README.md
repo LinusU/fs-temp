@@ -87,12 +87,8 @@ Synchronous version of `.writeFileSync()`, returns `path`.
 ### `.createWriteStream([options])`
 
 Creates and returns a `fs.WriteStream` that will write it's content to a
-temporary file. It differs from the standard `WriteStream` in the following
-ways.
-
- - An event named `path` will be emitted with the path to the file before the
-   `open` event is emitted.
- - The property `path` will be `null` until the `path` event is emitted.
+temporary file. This functions performs a little bit of blocking IO in order to
+open the file initially.
 
 ### `.template(template)`
 
