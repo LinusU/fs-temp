@@ -1,5 +1,5 @@
-var temp = require('./lib/temp')
-var randomPath = require('random-path')
+import randomPath from 'random-path'
+import temp from './lib/temp'
 
 function promisify (fn) {
   return function () {

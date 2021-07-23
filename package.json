@@ -6,8 +6,8 @@
   "files": [
     "index.d.ts",
     "index.js",
-    "promise.d.ts",
-    "promise.js",
+    "promises.d.ts",
+    "promises.js",
     "lib/"
   ],
   "scripts": {

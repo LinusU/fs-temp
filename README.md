@@ -34,11 +34,11 @@ var path = temp.template('linusu-%s').mkdirSync()
 
 ## Promise support
 
-If you require `fs-temp/promise` you'll receive an alternative API where all
+If you require `fs-temp/promises` you'll receive an alternative API where all
 functions that takes callbacks are replaced by `Promise`-returning functions.
 
 ```js
-var temp = require('fs-temp/promise')
+var temp = require('fs-temp/promises')
 
 var data = new Buffer('testing 1 2 3')
 
