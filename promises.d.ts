@@ -63,5 +63,15 @@ declare interface FSTempPromise {
   createWriteStream (options?: WriteStreamOptions): WriteStream
 }
 
-declare const temp: FSTempPromise & { template: (template: string) => FSTempPromise }
-export = temp
+declare const _default: FSTempPromise & { template: (template: string) => FSTempPromise }
+
+export const open: typeof _default['open']
+export const openSync: typeof _default['openSync']
+export const mkdir: typeof _default['mkdir']
+export const mkdirSync: typeof _default['mkdirSync']
+export const writeFile: typeof _default['writeFile']
+export const writeFileSync: typeof _default['writeFileSync']
+export const createWriteStream: typeof _default['createWriteStream']
+export const template: typeof _default['template']
+
+export default _default

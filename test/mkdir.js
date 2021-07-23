@@ -1,28 +1,28 @@
 /* eslint-env mocha */
 
-var lib = require('../')
+import assert from 'node:assert'
+import fs from 'node:fs'
 
-var fs = require('fs')
-var assert = require('assert')
+import lib from '../index.js'
 
 function checkCreatedDir (path) {
-  var files = fs.readdirSync(path)
+  const files = fs.readdirSync(path)
   assert.equal(files.length, 0)
 }
 
-describe('mkdir', function () {
-  var cleanup = []
+describe('mkdir', () => {
+  let cleanup = []
 
-  after(function () {
-    cleanup.forEach(function (path) {
-      try { fs.rmdirSync(path) } catch (err) {}
-    })
+  after(() => {
+    for (const path of cleanup) {
+      try { fs.rmdirSync(path) } catch {}
+    }
 
     cleanup = []
   })
 
-  it('should create empty directory async', function (done) {
-    lib.mkdir(function (err, path) {
+  it('should create empty directory async', (done) => {
+    lib.mkdir((err, path) => {
       assert.ifError(err)
 
       cleanup.push(path)
@@ -32,8 +32,8 @@ describe('mkdir', function () {
     })
   })
 
-  it('should create empty directory sync', function () {
-    var path = lib.mkdirSync()
+  it('should create empty directory sync', () => {
+    const path = lib.mkdirSync()
 
     cleanup.push(path)
     checkCreatedDir(path)

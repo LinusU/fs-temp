@@ -1,8 +1,8 @@
-var temp = require('./lib/temp')
-var randomPath = require('random-path')
+import { validateTemplate } from 'random-path'
+import * as temp from './lib/temp.js'
 
-function template (template) {
-  randomPath.validateTemplate(template)
+export function template (template) {
+  validateTemplate(template)
 
   return {
     open: temp.open.bind(temp, template),
@@ -15,5 +15,14 @@ function template (template) {
   }
 }
 
-module.exports = template('%s')
-module.exports.template = template
+const _default = Object.assign(template('%s'), { template })
+
+export const open = _default.open
+export const openSync = _default.openSync
+export const mkdir = _default.mkdir
+export const mkdirSync = _default.mkdirSync
+export const writeFile = _default.writeFile
+export const writeFileSync = _default.writeFileSync
+export const createWriteStream = _default.createWriteStream
+
+export default _default

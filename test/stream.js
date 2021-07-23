@@ -1,30 +1,30 @@
 /* eslint-env mocha */
 
-var lib = require('../')
+import assert from 'node:assert'
+import fs from 'node:fs'
 
-var fs = require('fs')
-var assert = require('assert')
+import lib from '../index.js'
 
-var data = new Buffer('testing 1 2 3')
+const data = Buffer.from('testing 1 2 3')
 
 function checkWrittenFile (path) {
-  var content = fs.readFileSync(path)
+  const content = fs.readFileSync(path)
   assert.equal(content.toString(), data.toString())
 }
 
-describe('createWriteStream', function () {
-  var cleanup = []
+describe('createWriteStream', () => {
+  let cleanup = []
 
-  after(function () {
-    cleanup.forEach(function (path) {
-      try { fs.unlinkSync(path) } catch (err) {}
-    })
+  after(() => {
+    for (const path of cleanup) {
+      try { fs.unlinkSync(path) } catch {}
+    }
 
     cleanup = []
   })
 
-  it('should write a stream', function (done) {
-    var s = lib.createWriteStream()
+  it('should write a stream', (done) => {
+    const s = lib.createWriteStream()
     cleanup.push(s.path)
 
     s.on('finish', function () {
@@ -35,8 +35,8 @@ describe('createWriteStream', function () {
     s.end(data)
   })
 
-  it('should accept string and encoding #1', function (done) {
-    var s = lib.createWriteStream('utf-8')
+  it('should accept string and encoding #1', (done) => {
+    const s = lib.createWriteStream('utf-8')
     cleanup.push(s.path)
 
     s.on('finish', function () {
@@ -47,8 +47,8 @@ describe('createWriteStream', function () {
     s.end(data.toString())
   })
 
-  it('should accept string and encoding #2', function (done) {
-    var s = lib.createWriteStream({ encoding: 'utf-8' })
+  it('should accept string and encoding #2', (done) => {
+    const s = lib.createWriteStream({ encoding: 'utf-8' })
     cleanup.push(s.path)
 
     s.on('finish', function () {

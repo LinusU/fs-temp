@@ -1,30 +1,30 @@
 /* eslint-env mocha */
 
-var lib = require('../')
+import assert from 'node:assert'
+import fs from 'node:fs'
 
-var fs = require('fs')
-var assert = require('assert')
+import lib from '../index.js'
 
-var data = new Buffer('testing 1 2 3')
+const data = Buffer.from('testing 1 2 3')
 
 function checkWrittenFile (path) {
-  var content = fs.readFileSync(path)
+  const content = fs.readFileSync(path)
   assert.equal(content.toString(), data.toString())
 }
 
-describe('writeFile', function () {
-  var cleanup = []
+describe('writeFile', () => {
+  let cleanup = []
 
   after(function () {
-    cleanup.forEach(function (path) {
-      try { fs.unlinkSync(path) } catch (err) {}
-    })
+    for (const path of cleanup) {
+      try { fs.unlinkSync(path) } catch {}
+    }
 
     cleanup = []
   })
 
-  it('should write a file async', function (done) {
-    lib.writeFile(data, function (err, path) {
+  it('should write a file async', (done) => {
+    lib.writeFile(data, (err, path) => {
       assert.ifError(err)
 
       cleanup.push(path)
@@ -34,15 +34,15 @@ describe('writeFile', function () {
     })
   })
 
-  it('should write a file sync', function () {
-    var path = lib.writeFileSync(data)
+  it('should write a file sync', () => {
+    const path = lib.writeFileSync(data)
 
     cleanup.push(path)
     checkWrittenFile(path)
   })
 
-  it('should accept string and encoding async', function (done) {
-    lib.writeFile(data.toString(), 'utf-8', function (err, path) {
+  it('should accept string and encoding async', (done) => {
+    lib.writeFile(data.toString(), 'utf-8', (err, path) => {
       assert.ifError(err)
 
       cleanup.push(path)
@@ -52,8 +52,8 @@ describe('writeFile', function () {
     })
   })
 
-  it('should accept string and encoding sync', function () {
-    var path = lib.writeFileSync(data.toString(), 'utf-8')
+  it('should accept string and encoding sync', () => {
+    const path = lib.writeFileSync(data.toString(), 'utf-8')
 
     cleanup.push(path)
     checkWrittenFile(path)

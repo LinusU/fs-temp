@@ -1,24 +1,24 @@
 /* eslint-env mocha */
 
-var lib = require('../')
+import assert from 'node:assert'
+import fs from 'node:fs'
+import path from 'node:path'
 
-var fs = require('fs')
-var path = require('path')
-var assert = require('assert')
+import lib from '../index.js'
 
-var content = new Buffer('Hello world')
+const content = Buffer.from('Hello world')
 
-var cases = [
-  [ 'abc-%s-xyz', /^abc-(.+)-xyz$/ ],
-  [ '%%-%%-%s-%%', /^%-%-(.+)-%$/ ],
-  [ '%%%%%s%%', /^%%(.+)%$/ ],
-  [ '%%s %s', /^%s (.+)$/ ],
-  [ '%%%%%s', /^%%(.+)$/ ],
-  [ '%s', /^(.+)$/ ],
-  [ '☃☃ %s ☃☃', /^☃☃ (.+) ☃☃$/ ]
+const cases = [
+  ['abc-%s-xyz', /^abc-(.+)-xyz$/],
+  ['%%-%%-%s-%%', /^%-%-(.+)-%$/],
+  ['%%%%%s%%', /^%%(.+)%$/],
+  ['%%s %s', /^%s (.+)$/],
+  ['%%%%%s', /^%%(.+)$/],
+  ['%s', /^(.+)$/],
+  ['☃☃ %s ☃☃', /^☃☃ (.+) ☃☃$/]
 ]
 
-var throws = [
+const throws = [
   'abc123',
   '%%s-%%s-%%s',
   '%%%%%%s%%%',
@@ -29,65 +29,65 @@ var throws = [
   ''
 ]
 
-cases.forEach(function (c) {
-  var libWithTemplate = lib.template(c[0])
+for (const c of cases) {
+  const libWithTemplate = lib.template(c[0])
 
   function assertPathMatches (filePath) {
-    var match = c[1].exec(path.basename(filePath))
+    const match = c[1].exec(path.basename(filePath))
     assert.ok(match, 'file name matches template')
 
-    var original = match[0].replace(/%/g, '%%').replace(match[1], '%s')
+    const original = match[0].replace(/%/g, '%%').replace(match[1], '%s')
     assert.equal(original, c[0], 'file name matches template')
   }
 
-  describe('template ' + JSON.stringify(c[0]), function () {
-    var cleanup = []
+  describe('template ' + JSON.stringify(c[0]), () => {
+    let cleanup = []
 
     after(function () {
-      cleanup.forEach(function (fn) {
-        try { fn() } catch (err) {}
-      })
+      for (const fn of cleanup) {
+        try { fn() } catch {}
+      }
 
       cleanup = []
     })
 
-    it('should open a file', function (done) {
-      libWithTemplate.open('w', function (err, res) {
+    it('should open a file', (done) => {
+      libWithTemplate.open('w', (err, res) => {
         assert.ifError(err)
-        cleanup.push(fs.closeSync.bind(fs, res.fd))
-        cleanup.push(fs.unlinkSync.bind(fs, res.path))
+        cleanup.push(() => fs.closeSync(res.fd))
+        cleanup.push(() => fs.unlinkSync(res.path))
         assertPathMatches(res.path)
         done()
       })
     })
 
-    it('should create a directory', function (done) {
-      libWithTemplate.mkdir(function (err, path) {
+    it('should create a directory', (done) => {
+      libWithTemplate.mkdir((err, path) => {
         assert.ifError(err)
 
-        cleanup.push(fs.rmdirSync.bind(fs, path))
+        cleanup.push(() => fs.rmdirSync(path))
         assertPathMatches(path)
 
         done()
       })
     })
 
-    it('should write a file', function (done) {
-      libWithTemplate.writeFile(content, function (err, path) {
+    it('should write a file', (done) => {
+      libWithTemplate.writeFile(content, (err, path) => {
         assert.ifError(err)
 
-        cleanup.push(fs.unlinkSync.bind(fs, path))
+        cleanup.push(() => fs.unlinkSync(path))
         assertPathMatches(path)
 
         done()
       })
     })
 
-    it('should write a stream', function (done) {
-      var out = libWithTemplate.createWriteStream()
+    it('should write a stream', (done) => {
+      const out = libWithTemplate.createWriteStream()
 
-      out.on('finish', function () {
-        cleanup.push(fs.unlinkSync.bind(fs, out.path))
+      out.on('finish', () => {
+        cleanup.push(() => fs.unlinkSync(out.path))
         assertPathMatches(out.path)
 
         done()
@@ -96,14 +96,14 @@ cases.forEach(function (c) {
       out.end(content)
     })
   })
-})
+}
 
-describe('template - invalid', function () {
-  throws.forEach(function (str) {
-    it('should throw on ' + JSON.stringify(str), function () {
-      assert.throws(function () {
+describe('template - invalid', () => {
+  for (const str of throws) {
+    it('should throw on ' + JSON.stringify(str), () => {
+      assert.throws(() => {
         lib.template(str)
       })
     })
-  })
+  }
 })

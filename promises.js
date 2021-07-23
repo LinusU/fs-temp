@@ -1,28 +1,9 @@
-import randomPath from 'random-path'
-import temp from './lib/temp'
+import { promisify } from 'node:util'
+import { validateTemplate } from 'random-path'
+import * as temp from './lib/temp.js'
 
-function promisify (fn) {
-  return function () {
-    var that = this
-    var args = new Array(arguments.length)
-
-    for (var i = 0; i < arguments.length; i++) {
-      args[i] = arguments[i]
-    }
-    return new Promise(function (resolve, reject) {
-      args.push(function (err, res) {
-        if (err) return reject(err)
-
-        resolve(res)
-      })
-
-      fn.apply(that, args)
-    })
-  }
-}
-
-function template (template) {
-  randomPath.validateTemplate(template)
+export function template (template) {
+  validateTemplate(template)
 
   return {
     open: promisify(temp.open.bind(temp, template)),
@@ -35,5 +16,14 @@ function template (template) {
   }
 }
 
-module.exports = template('%s')
-module.exports.template = template
+const _default = Object.assign(template('%s'), { template })
+
+export const open = _default.open
+export const openSync = _default.openSync
+export const mkdir = _default.mkdir
+export const mkdirSync = _default.mkdirSync
+export const writeFile = _default.writeFile
+export const writeFileSync = _default.writeFileSync
+export const createWriteStream = _default.createWriteStream
+
+export default _default

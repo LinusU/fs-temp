@@ -1,6 +1,6 @@
 /// <reference types="node" />
 
-import { WriteStream } from 'fs'
+import { WriteFileOptions, WriteStream } from 'fs'
 
 declare type OpenMode = 'w' | 'w+'
 declare type OpenResult = { fd: number, path: string }
@@ -8,8 +8,7 @@ declare type OpenResult = { fd: number, path: string }
 declare type OpenCallback = (err: NodeJS.ErrnoException | null, result: OpenResult | undefined) => void
 declare type PathCallback = (err: NodeJS.ErrnoException | null, path: string | undefined) => void
 
-declare type WriteFileOptions = { encoding?: BufferEncoding | null, mode?: Mode; flag?: string; } | string | null
-declare type WriteStreamOptions = { flags?: string, encoding?: BufferEncoding, fd?: number, mode?: number, autoClose?: boolean, emitClose?: boolean, start?: number, highWaterMark?: number } | string | null
+declare type WriteStreamOptions = { flags?: string, encoding?: BufferEncoding, mode?: number, autoClose?: boolean, emitClose?: boolean, start?: number, highWaterMark?: number } | BufferEncoding | null
 
 declare interface FSTemp {
   /**
@@ -82,5 +81,15 @@ declare interface FSTemp {
   createWriteStream (options?: WriteStreamOptions): WriteStream
 }
 
-declare const temp: FSTemp & { template: (template: string) => FSTemp }
-export = temp
+declare const _default: FSTemp & { template: (template: string) => FSTemp }
+
+export const open: typeof _default['open']
+export const openSync: typeof _default['openSync']
+export const mkdir: typeof _default['mkdir']
+export const mkdirSync: typeof _default['mkdirSync']
+export const writeFile: typeof _default['writeFile']
+export const writeFileSync: typeof _default['writeFileSync']
+export const createWriteStream: typeof _default['createWriteStream']
+export const template: typeof _default['template']
+
+export default _default

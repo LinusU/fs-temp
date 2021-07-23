@@ -3,6 +3,11 @@
   "version": "1.2.1",
   "license": "MIT",
   "repository": "LinusU/fs-temp",
+  "type": "module",
+  "exports": {
+    ".": "./index.js",
+    "./promises": "./promises.js"
+  },
   "files": [
     "index.d.ts",
     "index.js",
@@ -14,10 +19,13 @@
     "test": "standard && mocha"
   },
   "dependencies": {
-    "random-path": "^0.1.0"
+    "random-path": "^1.0.0"
   },
   "devDependencies": {
-    "mocha": "^2.2.5",
-    "standard": "^5.1.0"
+    "mocha": "^8.4.0",
+    "standard": "^16.0.3"
+  },
+  "engines": {
+    "node": "^12.20.0 || ^14.13.1 || >=16.0.0"
   }
 }
