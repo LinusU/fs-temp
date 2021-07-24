@@ -16,42 +16,41 @@ npm install --save fs-temp
 ## Usage
 
 ```js
-var temp = require('fs-temp')
+import temp from 'fs-temp'
 
-var data = new Buffer('testing 1 2 3')
-var path = temp.writeFileSync(data)
+const data = Buffer.from('testing 1 2 3')
+const path = temp.writeFileSync(data)
 
 // `path` now holds the path to a file with the specified `data`
 ```
 
 ```js
-var temp = require('fs-temp')
+import temp from 'fs-temp'
 
-var path = temp.template('linusu-%s').mkdirSync()
+const path = temp.template('linusu-%s').mkdirSync()
 
 // `path` now holds the path to a directory with the prefix 'linusu-'
 ```
 
 ## Promise support
 
-If you require `fs-temp/promise` you'll receive an alternative API where all
+If you import `fs-temp/promises` you'll receive an alternative API where all
 functions that takes callbacks are replaced by `Promise`-returning functions.
 
 ```js
-var temp = require('fs-temp/promise')
+import temp from 'fs-temp/promises'
 
-var data = new Buffer('testing 1 2 3')
+const data = Buffer.from('testing 1 2 3')
+const path = await temp.writeFile(data)
 
-temp.writeFile(data).then(path => {
-  // `path` now holds the path to a file with the specified `data`
-})
+// `path` now holds the path to a file with the specified `data`
 ```
 
 ## API
 
 The api mimics the one provided by `fs` very closely.
 
-### `.open(flags[, mode], callback)`
+### `open(flags[, mode], callback)`
 
 Asynchronous file open.
 
@@ -59,42 +58,38 @@ Asynchronous file open.
 
 The callback gets two arguments `(err, obj)`. `obj` has `fd` and `path`.
 
-### `.openSync(flags[, mode])`
+### `openSync(flags[, mode])`
 
 Synchronous version of `.open()`, returns `obj` with `fd` and `path`.
 
-### `.mkdir([mode, ]callback)`
+### `mkdir([mode, ]callback)`
 
 Creates an empty directory.
 
 The callback gets two arguments `(err, path)`.
 
-### `.mkdirSync([mode])`
+### `mkdirSync([mode])`
 
 Synchronous version of `.mkdir()`, returns `path`.
 
-### `.writeFile(data[, encoding], callback)`
+### `writeFile(data[, encoding], callback)`
 
 Asynchronously writes data to a file. `data` can be a string or a buffer. The
 `encoding` argument is ignored if `data` is a buffer. It defaults to `'utf8'`.
 
 The callback gets two arguments `(err, path)`.
 
-### `.writeFileSync(data[, encoding])`
+### `writeFileSync(data[, encoding])`
 
 Synchronous version of `.writeFileSync()`, returns `path`.
 
-### `.createWriteStream([options])`
+### `createWriteStream([options])`
 
 Creates and returns a `fs.WriteStream` that will write it's content to a
-temporary file. It differs from the standard `WriteStream` in the following
-ways.
+temporary file. This functions performs a little bit of blocking IO in order to
+open the file initially.
 
- - An event named `path` will be emitted with the path to the file before the
-   `open` event is emitted.
- - The property `path` will be `null` until the `path` event is emitted.
-
-### `.template(template)`
+### `template(template)`
 
 Returns a copy of the module that uses the specified `template` when generating
 file names. `template` should be a string where `%s` will be replaced with some
