@@ -23,7 +23,7 @@
   },
   "devDependencies": {
     "mocha": "^10.3.0",
-    "standard": "^16.0.3"
+    "standard": "^17.1.0"
   },
   "engines": {
     "node": "^12.20.0 || ^14.13.1 || >=16.0.0"
